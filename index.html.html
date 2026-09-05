@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>COMANDO NA PRÁTICA - Treinamento de Liderança na Obra</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* RESET E VARIÁVEIS - MOBILE FIRST */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-dark: #121214;
+            --bg-card: #1A1A1E;
+            --bg-light: #F8F9FA;
+            --text-light: #F3F4F6;
+            --text-dark: #111827;
+            --text-muted: #A1A1AA;
+            --primary-orange: #FF6B00;
+            --primary-orange-hover: #E05E00;
+            --accent-yellow: #FFB800;
+            --success-green: #10B981;
+            --border-color: #2D2D35;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.5;
+            font-size: 16px;
+            padding-bottom: 80px; /* Espaço para o botão fixo mobile */
+        }
+
+        /* ESTRUTURA BASE (MOBILE) */
+        .container {
+            width: 100%;
+            padding: 0 16px;
+            margin: 0 auto;
+        }
+
+        .btn-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 56px; /* Altura ideal para toque no celular */
+            background-color: var(--primary-orange);
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-align: center;
+            padding: 14px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta:active {
+            transform: scale(0.98);
+        }
+
+        /* BOTÃO FIXO DE CONVERSÃO NO MOBILE */
+        .sticky-mobile-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(18, 18, 20, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-top: 1px solid var(--border-color);
+            z-index: 999;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(255, 184, 0, 0.12);
+            color: var(--accent-yellow);
+            border: 1px solid var(--accent-yellow);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 32px 0 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: clamp(1.6rem, 7vw, 2.5rem);
+            font-weight: 900;
+            line-height: 1.25;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .hero h2 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin: 0 auto 28px;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 2px solid var(--primary-orange);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .pricing-card ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95rem;
+        }
+
+        .pricing-card ul li::before {
+            content: "✓";
+            color: var(--success-green);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-right: 10px;
+            line-height: 1;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .price-current {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--success-green);
+            margin: 4px 0 16px;
+        }
+
+        .security-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        /* PAIN SECTION */
+        .pain-section {
+            padding: 40px 0;
+            background-color: #16161A;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .quotes-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .quote-box {
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary-orange);
+            padding: 14px 16px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .cycle-box {
+            background: rgba(255, 107, 0, 0.08);
+            border: 1px dashed var(--primary-orange);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* LIGHT SECTION */
+        .light-section {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 40px 0;
+        }
+
+        .light-section .section-title {
+            color: var(--text-dark);
+        }
+
+        .highlight-quote {
+            background-color: #E5E7EB;
+            border-left: 4px solid var(--text-dark);
+            padding: 16px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .steps-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .step-card {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            background: var(--primary-orange);
+            color: white;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        /* MODULES SECTION */
+        .modules-section {
+            padding: 40px 0;
+        }
+
+        .modules-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .module-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .module-card h3 {
+            color: var(--accent-yellow);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .module-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* TABELA REFORMATADA PARA MOBILE (CARDS DE COMPARAÇÃO) */
+        .table-section {
+            padding: 40px 0;
+            background-color: #16161A;
+        }
+
+        .comparison-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comparison-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+        }
+
+        .comparison-card .before {
+            color: #F87171;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .comparison-card .after {
+            color: var(--success-green);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .comparison-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* GUARANTEE & FAQ */
+        .guarantee-box {
+            border: 2px dashed var(--success-green);
+            padding: 24px 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 40px 0;
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .faq-item h4 {
+            color: var(--accent-yellow);
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .faq-item p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px 16px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* MEDIA QUERIES (DESKTOP / TABLET - APENAS AJUSTES DE LARGURA) */
+        @media (min-width: 768px) {
+            body {
+                padding-bottom: 0;
+            }
+
+            .sticky-mobile-cta {
+                display: none; /* Esconde CTA fixo em telas grandes */
+            }
+
+            .container {
+                max-width: 900px;
+                padding: 0 20px;
+            }
+
+            .hero { padding: 60px 0 40px; }
+            .hero h2 { font-size: 1.2rem; }
+            
+            .pricing-card {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 30px;
+            }
+
+            .quotes-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .steps-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .modules-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            /* No desktop, mostra visual similar a tabela */
+            .comparison-mobile {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-card {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .comparison-card .before {
+                border-bottom: none;
+                border-right: 1px solid var(--border-color);
+                padding-bottom: 0;
+                margin-bottom: 0;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÃO FIXO MOBILE (HIGH CONVERSION) -->
+    <div class="sticky-mobile-cta">
+        <a href="https://pay.hotmart.com/H107486594D" class="btn-cta">GARANTIR ACESSO - R$ 47</a>
+    </div>
+
+    <!-- 1. HERO SECTION -->
+    <header class="hero">
+        <div class="container">
+            <span class="badge">Exclusivo para Lideranças de Obra</span>
+            <h1>SUA EQUIPE SÓ FAZ SE VOCÊ FICAR EM CIMA?</h1>
+            <h2>Faça sua equipe cumprir o combinado no canteiro de obras sem precisar gritar, ameaçar ou cobrar a mesma coisa várias vezes.</h2>
+
+            <div class="pricing-card">
+                <ul>
+                    <li>Treinamento prático e direto em 4 aulas simples</li>
+                    <li>Aplicação imediata em uma tarefa real da sua obra</li>
+                    <li>Acesso completo e imediato ao conteúdo</li>
+                </ul>
+                <div class="price-old">De R$ 197,00</div>
+                <div class="price-current">R$ 47,00</div>
+                <a href="https://pay.hotmart.com/H107486594D" class="btn-cta">QUERO FAZER MINHA EQUIPE CUMPRIR O COMBINADO</a>
+                <div class="security-note">🔒 Compra 100% Segura | Garantia Incondicional de 7 Dias</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. IDENTIFICAÇÃO DA DOR -->
+    <section class="pain-section">
+        <div class="container">
+            <h2 class="section-title">SE VOCÊ JÁ PENSOU...</h2>
+            <div class="quotes-grid">
+                <div class="quote-box">“Se eu não cobrar, não fazem.”</div>
+                <div class="quote-box">“Mas eu expliquei!”</div>
+                <div class="quote-box">“Ele falou que entendeu.”</div>
+                <div class="quote-box">“Eu saí daqui e quando voltei estava diferente.”</div>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 12px; color: var(--text-muted); font-size: 0.9rem;">Então você provavelmente conhece esse ciclo:</p>
+            <div class="cycle-box">
+                Você passa a orientação ➔ Você sai ➔ Você volta ➔ Descobre que está errado ➔ Você cobra ➔ A equipe faz
+            </div>
+            <p style="text-align: center; color: #F87171; font-weight: 600; font-size: 0.9rem;">O problema é que, desse jeito, você acaba virando parte obrigatória da execução.</p>
+        </div>
+    </section>
+
+    <!-- 3. CONSCIENTIZAÇÃO -->
+    <section class="light-section">
+        <div class="container">
+            <h2 class="section-title">COBRAR MAIS NÃO RESOLVE O PROBLEMA</h2>
+            <p>A cobrança pode fazer uma tarefa andar naquele momento. Mas ela não resolve necessariamente o que veio antes.</p>
+            <p style="margin-top: 12px;">Quando você pergunta: <strong>“Entendeu?”</strong> e a pessoa responde: <strong>“Entendi”</strong>, você ainda não sabe se os dois estão imaginando a mesma coisa.</p>
+            
+            <div class="highlight-quote">
+                UMA ORIENTAÇÃO CLARA AINDA NÃO É NECESSARIAMENTE UM COMBINADO.
+            </div>
+
+            <h3 style="margin-top: 32px; font-size: 1.2rem; text-align: center;">VOCÊ NÃO PRECISA FICAR NO CANGOTE O DIA INTEIRO</h3>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <strong>Deixe Claro</strong>
+                    <p style="font-size: 0.88rem; margin-top: 4px;">O QUE precisa ser feito, COMO deve ficar e ATÉ QUANDO precisa estar pronto.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <strong>Confirme</strong>
+                    <p style="font-size: 0.88rem; margin-top: 4px;">Peça para a pessoa explicar: <em>“Me explica o que você vai fazer.”</em></p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <strong>Ajuste</strong>
+                    <p style="font-size: 0.88rem; margin-top: 4px;">Se houver diferença entre o esperado e o entendido, ajuste antes de começar.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <strong>Conduza</strong>
+                    <p style="font-size: 0.88rem; margin-top: 4px;">Acompanhe o combinado sem transformar a gestão em cobrança repetitiva.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. MODULOS DO CURSO -->
+    <section class="modules-section">
+        <div class="container">
+            <h2 class="section-title">O QUE VOCÊ VAI APRENDER</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>01. Por que a equipe só faz quando você fica em cima cobrando?</h3>
+                    <p>Entenda o ciclo que faz a cobrança virar rotina e por que o problema quase sempre começa antes da execução.</p>
+                </div>
+                <div class="module-card">
+                    <h3>02. A estrutura da orientação clara: O Que, O Como e O Quando</h3>
+                    <p>Aprenda a alinhar os três pilares fundamentais da clareza para não deixar margem para interpretações.</p>
+                </div>
+                <div class="module-card">
+                    <h3>03. Como transformar uma orientação em um combinado</h3>
+                    <p>Aprenda a confirmar o entendimento real, pedir para a pessoa explicar e alinhar expectativas antes de começar.</p>
+                </div>
+                <div class="module-card">
+                    <h3>04. Do treinamento para o canteiro: Como aplicar hoje na sua obra</h3>
+                    <p>Leve o processo direto para uma tarefa real da sua obra. Sem enrolação ou teorias impraticáveis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. ANTES X DEPOIS (OTIMIZADO PARA MOBILE) -->
+    <section class="table-section">
+        <div class="container">
+            <h2 class="section-title">PERCEBA A DIFERENÇA</h2>
+            <div class="comparison-mobile">
+                <div class="comparison-card">
+                    <div class="before">
+                        <span class="comparison-label">ANTES</span>
+                        Você passa a tarefa e a pessoa diz que entendeu.
+                    </div>
+                    <div class="after">
+                        <span class="comparison-label">DEPOIS</span>
+                        Você deixa claro o que, como e quando.
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="before">
+                        <span class="comparison-label">ANTES</span>
+                        Você sai, volta e não está como deveria.
+                    </div>
+                    <div class="after">
+                        <span class="comparison-label">DEPOIS</span>
+                        Confirma o entendimento pedindo para a pessoa explicar.
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="before">
+                        <span class="comparison-label">ANTES</span>
+                        Você explica novamente, corrige e cobra.
+                    </div>
+                    <div class="after">
+                        <span class="comparison-label">DEPOIS</span>
+                        Ajusta o que for necessário antes do início.
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="before">
+                        <span class="comparison-label">ANTES</span>
+                        Dependência de cobrança repetitiva.
+                    </div>
+                    <div class="after">
+                        <span class="comparison-label">DEPOIS</span>
+                        Condução do combinado até o resultado.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. OFERTA FINAL E GARANTIA -->
+    <section class="modules-section" id="checkout">
+        <div class="container">
+            <h2 class="section-title">COMECE AGORA MESMO</h2>
+            <p style="text-align: center; margin-bottom: 24px; font-size: 0.95rem; color: var(--text-muted);">
+                Não tente mudar a obra inteira de uma vez. Escolha aquela tarefa que hoje só acontece quando você fica em cima e aplique o método nela.
+            </p>
+
+            <div class="pricing-card">
+                <span class="badge">TREINAMENTO COMANDO NA PRÁTICA</span>
+                <div class="price-old">R$ 197,00</div>
+                <div class="price-current">R$ 47,00</div>
+                <p style="margin-bottom: 16px; color: var(--text-muted); font-size: 0.9rem;">4 aulas práticas sem enrolação.</p>
+                <a href="https://pay.hotmart.com/H107486594D" class="btn-cta">QUERO FAZER MINHA EQUIPE CUMPRIR O COMBINADO</a>
+            </div>
+
+            <div class="guarantee-box">
+                <h3 style="color: var(--success-green); font-size: 1.2rem; margin-bottom: 8px;">🛡️ GARANTIA DE 7 DIAS</h3>
+                <p style="font-size: 0.88rem;">Assista ao treinamento e teste o processo. Se não ficar satisfeito, basta solicitar a devolução de 100% do seu dinheiro.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="pain-section">
+        <div class="container">
+            <h2 class="section-title">PERGUNTAS FREQUENTES</h2>
+            
+            <div class="faq-item">
+                <h4>Isso é um curso de liderança?</h4>
+                <p>Não no sentido tradicional. O foco é resolver um problema específico: fazer aquilo que foi combinado realmente acontecer sem depender de cobrança repetitiva.</p>
+            </div>
+            <div class="faq-item">
+                <h4>E se minha equipe já tiver experiência?</h4>
+                <p>Experiência não elimina a necessidade de clareza. Mesmo profissionais experientes podem interpretar uma orientação de maneira diferente do que você imaginou.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Então eu nunca mais vou precisar cobrar?</h4>
+                <p>Não é essa a promessa. O objetivo é reduzir a dependência da cobrança repetitiva para que a tarefa aconteça.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Preciso ser engenheiro?</h4>
+                <p>Não. O treinamento é para quem lidera equipe no dia a dia da obra e precisa conduzir a execução das tarefas.</p>
+            </div>
+            <div class="faq-item">
+                <h4>É só falar mais firme?</h4>
+                <p>Não. A questão não é aumentar a firmeza da cobrança, mas mudar o caminho entre a orientação e o resultado.</p>
+            </div>
+            <div class="faq-item">
+                <h4>E se eu comprar e não gostar?</h4>
+                <p>Você tem 7 dias de garantia de satisfação. Se não gostar, basta solicitar a devolução do seu dinheiro.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p><strong>SUA EQUIPE NÃO PRECISA DE MAIS COBRANÇA.</strong></p>
+            <p style="margin-top: 4px;">Ela precisa saber exatamente o que precisa ser feito.</p>
+            <p style="margin-top: 16px; color: #52525B; font-size: 0.75rem;">Pressão toda obra tem. O que muda é quem sabe conduzir a equipe.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
